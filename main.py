@@ -21,7 +21,7 @@ file.close()
 high_score = init_high
 
 
-# 2048 game color library
+# градация цветов
 colors = {0: (176, 226, 255),
           2: (135, 206, 250),
           4: (32, 178, 170),
@@ -40,7 +40,7 @@ colors = {0: (176, 226, 255),
           'bg': (187, 173, 160)}
 
 
-# draw game over and restart text
+# финальная плашка
 def draw_over():
     pygame.draw.rect(screen, 'black', [50, 50, 500, 150], 0, 10)
     game_over_text1 = font.render('Игра окончена!', True, 'white')
@@ -49,7 +49,7 @@ def draw_over():
     screen.blit(game_over_text2, (70, 105))
 
 
-# take your turn based on direction
+# движение плиток
 def take_turn(direc, board):
     global score
     merged = [[False for _ in range(4)] for _ in range(4)]
@@ -126,7 +126,7 @@ def take_turn(direc, board):
     return board
 
 
-# spawn in new pieces randomly when turns start
+# новая плитка
 def new_pieces(board):
     count = 0
     full = False
@@ -144,7 +144,7 @@ def new_pieces(board):
     return board, full
 
 
-# draw background for the board
+# фон 2048
 def draw_board():
     pygame.draw.rect(screen, colors['bg'], [0, 0, 400, 400], 0, 10)
     score_text = font.render(f'Score: {score}', True, 'black')
@@ -154,7 +154,7 @@ def draw_board():
     pass
 
 
-# draw tiles for game
+# рисуем плитки
 def draw_pieces(board):
     for i in range(4):
         for j in range(4):
@@ -179,7 +179,6 @@ def draw_pieces(board):
 
 button1 = pygame.Rect(250, 250, 500, 100)  # Создаем прямоугольник для первой кнопки
 button2 = pygame.Rect(250, 450, 500, 100)  # Создаем прямоугольник для второй кнопки
-button3 = pygame.Rect(250, 650, 500, 100)
 
 
 def draw_title(text):
@@ -221,7 +220,39 @@ def start_screen():
 
 
 def show_high_score():
-    pass
+    with open("high_score", "r") as hs_file:
+            hs = int(hs_file.read())
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        screen.fill('gray')  # Заливаем экран черным цветом
+
+        draw_button(button2, "Вернуться на экран")
+        # Создаем поверхность с текстом
+        text_surf = pygame.font.Font(None, 50).render(f'High score: {hs}', True, (255, 255, 255))
+
+        # Получаем прямоугольник, ограничивающий поверхность с текстом
+        text_rect = text_surf.get_rect()
+
+        # Центрируем прямоугольник
+        text_rect.center = ((800 // 2), (600 // 2))
+
+        # Выводим текст на экран
+        screen.blit(text_surf, text_rect)
+
+        pygame.display.flip()  # обновляем экран
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if button2.collidepoint(mouse_pos):
+                    start_screen()  # Показать лучший результат
+
 
 def main_game():
     board_values = [[0 for _ in range(4)] for _ in range(4)]
