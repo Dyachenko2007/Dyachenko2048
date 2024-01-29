@@ -157,7 +157,8 @@ def draw_board():
     pass
 
 sprites = {
-    2: pygame.image.load('img.png')
+    2: pygame.image.load('img2.png'),
+    4: pygame.image.load('img4.png')
 }
 
 block_size = (75, 75)
@@ -187,7 +188,7 @@ def draw_pieces(board):
                 text_rect = value_text.get_rect(center=(j * 95 + 57, i * 95 + 57))
                 screen.blit(value_text, text_rect)
                 pygame.draw.rect(screen, 'black', [j * 95 + 20, i * 95 + 20, 75, 75], 2, 5)
-            if value == 2:
+            if value == 2 or value == 4:
                 sprite = sprites[value]
                 screen.blit(sprite, (j * 95 + 20, i * 95 + 20))
 
@@ -205,7 +206,7 @@ def draw_title(text):
 
 
 def draw_button(button, text):
-    pygame.draw.rect(screen, (0, 255, 0), button)  # Отрисовываем прямоугольник кнопки
+    pygame.draw.rect(screen, 'royalblue4', button)  # Отрисовываем прямоугольник кнопки
     font = pygame.font.Font(None, 36)  # Выбираем шрифт для текста
     text = font.render(text, 24, (0, 0, 0))  # Создаем объект текста
     screen.blit(text, button.move(10, 10))  # Отрисовываем текст на кнопке
