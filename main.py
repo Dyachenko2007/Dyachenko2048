@@ -206,7 +206,7 @@ def draw_title(text):
 
 
 def draw_button(button, text):
-    pygame.draw.rect(screen, 'royalblue4', button)  # Отрисовываем прямоугольник кнопки
+    pygame.draw.rect(screen, 'gold', button)  # Отрисовываем прямоугольник кнопки
     font = pygame.font.Font(None, 36)  # Выбираем шрифт для текста
     text = font.render(text, 24, (0, 0, 0))  # Создаем объект текста
     screen.blit(text, button.move(10, 10))  # Отрисовываем текст на кнопке
