@@ -17,3 +17,5 @@
 5. Счётчик результата
 6. Файл с лучшим результатом
 
+Презентация:
+https://docs.google.com/presentation/d/1v44QFPzSg8yALGhvNgBG8RJ6siMmpmZmdS7oFGLjc3U/edit#slide=id.g1efa6359916_0_96
