@@ -3,6 +3,8 @@ import random
 
 pygame.init()
 
+level = 2
+
 screen = pygame.display.set_mode([1000, 800])
 pygame.display.set_caption('Михаил Андреевич 💝')
 timer = pygame.time.Clock()
@@ -135,7 +137,7 @@ def new_pieces(board):
         col = random.randint(0, 3)
         if board[row][col] == 0:
             count += 1
-            if random.randint(1, 10) == 10:
+            if level == 4:
                 board[row][col] = 4
             else:
                 board[row][col] = 2
@@ -153,6 +155,15 @@ def draw_board():
     screen.blit(high_score_text, (500, 250))
     pass
 
+sprites = {
+    2: pygame.image.load('img.png')
+}
+
+block_size = (75, 75)
+
+# Подгоняем размер спрайтов
+for value, sprite in sprites.items():
+    sprites[value] = pygame.transform.scale(sprite, block_size)
 
 # рисуем плитки
 def draw_pieces(board):
@@ -175,10 +186,14 @@ def draw_pieces(board):
                 text_rect = value_text.get_rect(center=(j * 95 + 57, i * 95 + 57))
                 screen.blit(value_text, text_rect)
                 pygame.draw.rect(screen, 'black', [j * 95 + 20, i * 95 + 20, 75, 75], 2, 5)
+            if value == 2:
+                sprite = sprites[value]
+                screen.blit(sprite, (j * 95 + 20, i * 95 + 20))
 
 
 button1 = pygame.Rect(250, 250, 500, 100)  # Создаем прямоугольник для первой кнопки
 button2 = pygame.Rect(250, 450, 500, 100)  # Создаем прямоугольник для второй кнопки
+button3 = pygame.Rect(250, 650, 500, 100)  # Создаем прямоугольник для второй кнопки
 
 
 def draw_title(text):
@@ -201,8 +216,9 @@ def start_screen():
     while run:
         screen.fill('gray')
         draw_title("Игра 2048")
-        draw_button(button1, "Начать игру")
-        draw_button(button2, "Показать лучший результат")
+        draw_button(button1, "Уровень 1")
+        draw_button(button2, "Уровень 2")
+        draw_button(button3, "Показать лучший результат")
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -210,9 +226,13 @@ def start_screen():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if button1.collidepoint(mouse_pos):
+                    level = 2
                     main_game()  # Запуск основной игры
-                elif button2.collidepoint(mouse_pos):
+                elif button3.collidepoint(mouse_pos):
                     show_high_score()  # Показать лучший результат
+                elif button2.collidepoint(mouse_pos):
+                    level = 4
+                    main_game()  # Показать лучший результат
 
         pygame.display.flip()
 
