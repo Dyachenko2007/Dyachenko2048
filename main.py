@@ -130,6 +130,7 @@ def take_turn(direc, board):
 
 # новая плитка
 def new_pieces(board):
+    global level
     count = 0
     full = False
     while any(0 in row for row in board) and count < 1:
@@ -212,6 +213,7 @@ def draw_button(button, text):
 
 
 def start_screen():
+    global level
     run = True
     while run:
         screen.fill('gray')
